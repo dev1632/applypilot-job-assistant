@@ -1,0 +1,56 @@
+<!doctype html>
+<html><head><title>Software Engineer, New Grad - Northwind</title>
+<style>.menu{border:1px solid #ccc} .menu[hidden]{display:none}</style></head>
+<body><h1>Software Engineer, New Grad</h1><p>Northwind · New York, NY</p>
+<form id="f">
+  <label for="first_name">First Name*</label><input id="first_name" name="first_name" required>
+  <label for="email">Email*</label><input id="email" name="email" required>
+  <div class="field"><label class="visually-hidden" for="resume">Attach</label>
+    <button type="button">Attach</button><input id="resume" type="file" style="position:absolute;left:-9999px"></div>
+  <div class="field"><label for="cover_letter">Attach</label><input id="cover_letter" type="file"></div>
+  <!-- React-select style dropdown: an input with role=combobox, options rendered on click -->
+  <label id="q1-label" for="q1">Are you legally authorized to work in the United States?*</label>
+  <div class="select__control"><div class="select__value-container">
+    <div class="select__single-value"></div>
+    <input id="q1" role="combobox" aria-labelledby="q1-label" aria-required="true" type="text" autocomplete="off">
+  </div></div>
+  <div class="menu" role="listbox" id="q1-menu" hidden>
+    <div role="option">Yes</div><div role="option">No</div>
+  </div>
+  <!-- Type-ahead: no options until the user searches -->
+  <label id="loc-label" for="loc">Location (City)*</label>
+  <input id="loc" role="combobox" aria-labelledby="loc-label" aria-required="true" type="text">
+  <!-- Hidden validation helper that must be ignored -->
+  <input tabindex="-1" aria-hidden="true" required style="opacity:0;height:1px;width:1px">
+  <button type="submit">Submit application</button>
+</form>
+<script>
+  // Minimal react-select behavior: ArrowDown opens, typing filters, arrows move, Enter selects,
+  // and the chosen option is marked aria-selected.
+  const q1 = document.getElementById('q1'), menu = document.getElementById('q1-menu');
+  const opts = [...menu.querySelectorAll('[role=option]')];
+  let focusIdx = 0;
+  const visible = () => opts.filter((o) => !o.hidden);
+  const choose = (o) => {
+    q1.closest('.select__control').querySelector('.select__single-value').textContent = o.textContent;
+    opts.forEach((x) => x.setAttribute('aria-selected', String(x === o)));
+    q1.value = ''; opts.forEach((x) => (x.hidden = false)); menu.hidden = true;
+    q1.setAttribute('aria-expanded', 'false');
+  };
+  const open = () => { menu.hidden = false; focusIdx = 0; q1.setAttribute('aria-expanded', 'true'); };
+  q1.addEventListener('click', open);
+  q1.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); if (menu.hidden) open(); else focusIdx = Math.min(focusIdx + 1, visible().length - 1); }
+    if (e.key === 'Enter' && !menu.hidden) { e.preventDefault(); choose(visible()[focusIdx]); }
+    if (e.key === 'Escape') { menu.hidden = true; q1.setAttribute('aria-expanded', 'false'); }
+  });
+  q1.addEventListener('input', () => {
+    open();
+    const t = q1.value.toLowerCase();
+    opts.forEach((o) => (o.hidden = !o.textContent.toLowerCase().includes(t)));
+  });
+  menu.addEventListener('click', (e) => { if (e.target.getAttribute('role') === 'option') choose(e.target); });
+  // A hostile page leaking typed values through GET image beacons.
+  document.getElementById('email').addEventListener('input', (e) => { new Image().src = '/leak?v=' + encodeURIComponent(e.target.value); });
+</script>
+</body></html>

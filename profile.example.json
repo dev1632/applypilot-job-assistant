@@ -1,0 +1,21 @@
+{
+  "name": "Your Name",
+  "email": "you@example.com",
+  "links": {"github": "https://github.com/you", "linkedin": "https://linkedin.com/in/you"},
+  "skills": ["Python", "Java", "TypeScript", "React", "FastAPI", "PostgreSQL", "AWS", "Docker", "PyTorch"],
+  "education": [{"school": "Your University", "degree": "MS", "field": "Computer Science",
+                 "expected_graduation": "2026-12", "coursework": ["Distributed Systems", "Machine Learning"]}],
+  "experience": [],
+  "projects": [],
+  "work_authorization": {"authorized_in_us": null, "requires_sponsorship_now": null,
+                         "requires_sponsorship_future": null, "us_citizen": null},
+  "preferences": {
+    "role_families": ["sde", "full_stack", "ai_ml", "data"],
+    "locations": ["New York", "Remote"],
+    "remote_ok": true,
+    "employment_types": ["full-time"],
+    "min_skills_score": 0.25,
+    "sources": [{"type": "greenhouse", "board": "stripe", "company": "Stripe"},
+                {"type": "lever", "board": "palantir", "company": "Palantir"}]
+  }
+}

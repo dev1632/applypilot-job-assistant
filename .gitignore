@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.pytest_cache/
+# Local personal data: never commit
+data/
+*.db
+browser_profiles/
+logs/
+node_modules/
+frontend/dist/
+demo_data/
+
+# Local tool config
+.claude/
