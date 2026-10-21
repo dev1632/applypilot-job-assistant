@@ -168,4 +168,3 @@ APPLYPILOT_DATA_DIR=./demo_data APPLYPILOT_DEV_ROUTES=true .venv/bin/uvicorn bac
 .venv/bin/python -m pytest -q backend/tests
 ```
 
-Personal data (`data/`, the DB, resumes, `.env`) is git-ignored.
